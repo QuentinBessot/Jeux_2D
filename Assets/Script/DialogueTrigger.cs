@@ -51,3 +51,4 @@ public class DialogueTrigger : MonoBehaviour
         DialogueManager.instance.StartDialogue(dialogue);
     }
 }
+    

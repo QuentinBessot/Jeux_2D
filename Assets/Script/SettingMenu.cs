@@ -10,7 +10,7 @@ public class SettingMenu : MonoBehaviour
     public AudioMixer audioMixer;
 
     public Dropdown resolutionDropdown;
-    
+
     Resolution[] resolutions;
 
     public Slider musicSlider;
@@ -24,21 +24,25 @@ public class SettingMenu : MonoBehaviour
         audioMixer.GetFloat("Sound", out float soundValueForSlider);
         soundSlider.value = soundValueForSlider;
 
+        // Filtrer les résolutions pour inclure uniquement celles qui sont >= 1152x864
+        resolutions = Screen.resolutions
+            .Where(resolution => resolution.width >= 1152 && resolution.height >= 864)
+            .Select(resolution => new Resolution { width = resolution.width, height = resolution.height })
+            .Distinct()
+            .ToArray();
 
-
-        resolutions = Screen.resolutions.Select(resolution => new Resolution { width = resolution.width, height = resolution.height }).Distinct().ToArray();
         resolutionDropdown.ClearOptions();
 
         List<string> options = new List<string>();
 
         int currentResolutionIndex = 0;
 
-        for (int i = 0; i < resolutions.Length; i++ )
+        for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + "x" + resolutions[i].height;
             options.Add(option);
 
-            if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height) 
+            if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
             {
                 currentResolutionIndex = i;
             }
@@ -49,8 +53,7 @@ public class SettingMenu : MonoBehaviour
         Screen.fullScreen = true;
     }
 
-
-    public void SetVolume(float volume) 
+    public void SetVolume(float volume)
     {
         audioMixer.SetFloat("Music", volume);
     }
@@ -75,5 +78,4 @@ public class SettingMenu : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
     }
-
 }
