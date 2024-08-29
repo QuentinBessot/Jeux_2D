@@ -15,6 +15,16 @@ public class PayerEffect : MonoBehaviour
         yield return new WaitForSeconds(speedDuration);
         Move_Players.instance.moveSpeed -= speedGiven;  
     }
+    public void AddSJump(int jumpGiven, float junpDuration)
+    {
+        Move_Players.instance.jumpForce += jumpGiven;
+        StartCoroutine(RemoveJump(jumpGiven, junpDuration));
+    }
 
+    public IEnumerator RemoveJump(int jumpGiven, float junpDuration)
+    {
+        yield return new WaitForSeconds(junpDuration);
+        Move_Players.instance.jumpForce -= jumpGiven;
+    }
 
 }

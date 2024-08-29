@@ -99,6 +99,14 @@ public class Move_Players : MonoBehaviour
         {
             canJump = false;  // Désactiver le saut lorsque le joueur est à proximité d'une échelle
         }
+        if (collision.CompareTag("Dialogue"))
+        {
+            canJump = false;  // Désactiver le saut lorsque le joueur est à proximité d'une échelle
+        }
+        if (collision.CompareTag("Shop"))
+        {
+            canJump = false;  // Désactiver le saut lorsque le joueur est à proximité d'une échelle
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -106,6 +114,14 @@ public class Move_Players : MonoBehaviour
         if (collision.CompareTag("Ladder"))
         {
             canJump = true;  // Réactiver le saut lorsque le joueur quitte la proximité de l'échelle
+        }
+        if (collision.CompareTag("Dialogue"))
+        {
+            canJump = true;  // Désactiver le saut lorsque le joueur est à proximité d'une échelle
+        }
+        if (collision.CompareTag("Shop"))
+        {
+            canJump = true;  // Désactiver le saut lorsque le joueur est à proximité d'une échelle
         }
     }
 

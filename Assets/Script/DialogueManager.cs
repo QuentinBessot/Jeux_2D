@@ -18,12 +18,11 @@ public class DialogueManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogWarning("Il y a plus d une instance de Dialogue Manager dans la scene ");
+            Debug.LogWarning("Il y a plus d'une instance de Dialogue Manager dans la scène ");
             return;
         }
 
         instance = this;
-
         sentences = new Queue<string>();
     }
 
@@ -77,5 +76,20 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         animator.SetBool("IsOpen", false);
+        EnableInventoryElements();
+    }
+
+    void EnableInventoryElements()
+    {
+        // Trouver tous les objets avec le tag "Inventaire"
+        GameObject[] inventoryElements = GameObject.FindGameObjectsWithTag("Inventaire");
+
+        // Afficher chaque élément trouvé dans la console
+        Debug.Log("Inventaire Elements Found:");
+        foreach (GameObject element in inventoryElements)
+        {
+            Debug.Log(element.name); // Affiche le nom de chaque élément
+            element.SetActive(true); // Réactiver chaque élément
+        }
     }
 }

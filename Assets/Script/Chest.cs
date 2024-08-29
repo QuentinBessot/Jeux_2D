@@ -16,14 +16,35 @@ public class Chest : MonoBehaviour
     public Item healthPotion;
     public Item speedPotion;
 
+    // Images pour les récompenses
+    public Sprite healthPotionImage;
+    public Sprite speedPotionImage;
+    public Sprite coinsImage;
+
     // Probabilités pour obtenir les différents items (tu peux les ajuster)
     [Range(0, 100)] public int healthPotionChance = 33;
     [Range(0, 100)] public int speedPotionChance = 33;
     [Range(0, 100)] public int coinsChance = 34;
 
+    // Référence à l'élément Text UI pour afficher la récompense
+    public Text rewardTextUI;  // Assurez-vous d'attacher un Text UI dans l'inspecteur
+
+    // Référence à l'image UI pour afficher l'image de la récompense
+    public Image rewardImageUI;  // Assurez-vous d'attacher un Image UI dans l'inspecteur
+
     void Awake()
     {
         interactUI = GameObject.FindGameObjectWithTag("InteractUI").GetComponent<Text>();
+
+        // Masquer le texte de récompense et l'image au début
+        if (rewardTextUI != null)
+        {
+            rewardTextUI.enabled = false;
+        }
+        if (rewardImageUI != null)
+        {
+            rewardImageUI.enabled = false;
+        }
     }
 
     void Update()
@@ -46,23 +67,62 @@ public class Chest : MonoBehaviour
     void GiveRandomReward()
     {
         int randomValue = Random.Range(0, 100);
+        string rewardMessage = "";
+        Sprite rewardImage = null;
 
         if (randomValue < healthPotionChance)
         {
             Inventory.instance.content.Add(healthPotion);
-            Debug.Log("You got a Health Potion!");
+            rewardMessage = "You got a Health Potion!";
+            rewardImage = healthPotionImage;
             Inventory.instance.UpdateInventoryUI();
         }
         else if (randomValue < healthPotionChance + speedPotionChance)
         {
             Inventory.instance.content.Add(speedPotion);
-            Debug.Log("You got a Speed Potion!");
+            rewardMessage = "You got a Speed Potion!";
+            rewardImage = speedPotionImage;
             Inventory.instance.UpdateInventoryUI();
         }
         else
         {
             Inventory.instance.AddCoins(coinsToAdd);
-            Debug.Log("You got some coins!");
+            rewardMessage = "You got some coins!";
+            rewardImage = coinsImage;
+        }
+
+        // Afficher le message de récompense et l'image dans l'UI
+        ShowRewardMessage(rewardMessage, rewardImage);
+    }
+
+    void ShowRewardMessage(string message, Sprite image)
+    {
+        if (rewardTextUI != null)
+        {
+            rewardTextUI.text = message;
+            rewardTextUI.enabled = true;
+        }
+
+        if (rewardImageUI != null)
+        {
+            rewardImageUI.sprite = image;
+            rewardImageUI.enabled = true;
+        }
+
+        // Optionnel : Masquer le message et l'image après un certain temps
+        StartCoroutine(HideRewardMessage());
+    }
+
+    IEnumerator HideRewardMessage()
+    {
+        yield return new WaitForSeconds(2.0f);  // Attendre 2 secondes avant de masquer le texte et l'image
+        if (rewardTextUI != null)
+        {
+            rewardTextUI.enabled = false;
+        }
+        if (rewardImageUI != null)
+        {
+            rewardImageUI.enabled = false;
         }
     }
 

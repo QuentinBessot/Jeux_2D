@@ -9,6 +9,9 @@ TagManager:
   - PlayerS
   - InteractUI
   - Ladder
+  - Dialogue
+  - Inventaire
+  - Shop
   layers:
   - Default
   - TransparentFX

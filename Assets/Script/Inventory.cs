@@ -42,6 +42,7 @@ public class Inventory : MonoBehaviour
         Item currentItem = content[contentCurrentIndex];
         PlayerHealth.instance.HealPlayer(currentItem.hpGiven);
         playerEffect.AddSpeed(currentItem.speedGiven, currentItem.speedDuration);
+        playerEffect.AddSJump(currentItem.jumpGiven, currentItem.jumpDuration);
         content.Remove(currentItem);
         GetNextItem();
         UpdateInventoryUI();

@@ -6,22 +6,21 @@ using UnityEngine.UI;
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
-
     public bool isInRange = false;
 
-
+    private GameObject[] inventoryElements;
     private Text interactUI;
 
     private void Awake()
     {
         interactUI = GameObject.FindGameObjectWithTag("InteractUI").GetComponent<Text>();
+        inventoryElements =  GameObject.FindGameObjectsWithTag("Inventaire");
     }
-
 
     // Update is called once per frame
     void Update()
     {
-        if(isInRange && Input.GetKeyDown(KeyCode.E)) 
+        if (isInRange && Input.GetKeyDown(KeyCode.E))
         {
             TriggerDialogue();
         }
@@ -29,7 +28,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) 
+        if (collision.CompareTag("Player"))
         {
             isInRange = true;
             interactUI.enabled = true;
@@ -43,12 +42,28 @@ public class DialogueTrigger : MonoBehaviour
             isInRange = false;
             interactUI.enabled = false;
             DialogueManager.instance.EndDialogue();
+            DisableInventoryElements(true);
+
         }
     }
 
-    void TriggerDialogue() 
+    void TriggerDialogue()
     {
+        // Démarrer le dialogue
         DialogueManager.instance.StartDialogue(dialogue);
+
+        // Désactiver tous les éléments avec le tag "Inventaire"
+        DisableInventoryElements(false);
+    }
+
+    // Méthode pour désactiver les éléments avec le tag "Inventaire"
+    void DisableInventoryElements(bool present)
+    {
+
+        // Parcourir chaque élément et le désactiver
+        foreach (GameObject element in inventoryElements)
+        {
+            element.SetActive(present);
+        }
     }
 }
-    
