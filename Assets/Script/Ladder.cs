@@ -18,14 +18,14 @@ public class Ladder : MonoBehaviour
 
     void Update()
     {
-        if (isInRange && playerMovement.isClimbing && Input.GetKeyDown(KeyCode.E))
+        if (isInRange && playerMovement.isClimbing && Input.GetKeyDown(Move_Players.instance.interact))
         {
             playerMovement.isClimbing = false;
             collider.isTrigger = false;
             return;
         }
 
-        if(isInRange && Input.GetKeyDown(KeyCode.E))
+        if(isInRange && Input.GetKeyDown(Move_Players.instance.interact))
         { 
             playerMovement.isClimbing = true;
             collider.isTrigger = true;

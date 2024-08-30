@@ -7,7 +7,7 @@ public class ShopTrigger : MonoBehaviour
 {
 
     private bool isInRange = false;
-
+    public KeyBindingManager keyBindingManager;
 
     private Text interactUI;
     public string pnjName;
@@ -22,7 +22,7 @@ public class ShopTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isInRange && Input.GetKeyDown(KeyCode.E))
+        if (isInRange && Input.GetKeyDown(keyBindingManager.movePlayers.interact))
         {
             ShopManager.instance.OpenShop(itemsToSell, pnjName);
         }

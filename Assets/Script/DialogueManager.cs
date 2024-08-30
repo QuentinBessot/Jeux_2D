@@ -84,11 +84,8 @@ public class DialogueManager : MonoBehaviour
         // Trouver tous les objets avec le tag "Inventaire"
         GameObject[] inventoryElements = GameObject.FindGameObjectsWithTag("Inventaire");
 
-        // Afficher chaque élément trouvé dans la console
-        Debug.Log("Inventaire Elements Found:");
         foreach (GameObject element in inventoryElements)
         {
-            Debug.Log(element.name); // Affiche le nom de chaque élément
             element.SetActive(true); // Réactiver chaque élément
         }
     }

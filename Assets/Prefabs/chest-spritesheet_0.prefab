@@ -123,11 +123,20 @@ MonoBehaviour:
   animator: {fileID: 5295411654819411754}
   coinsToAdd: 5
   SoundToPlay: {fileID: 8300000, guid: a25bef744296ac945b1f1888e74e5faf, type: 3}
+  keyBindingManager: {fileID: 0}
   healthPotion: {fileID: 11400000, guid: c759713f1d3595f4ba95f9d9b4069ac0, type: 2}
   speedPotion: {fileID: 11400000, guid: 27102c2d11e632243ade79b2a40b1739, type: 2}
-  healthPotionChance: 33
-  speedPotionChance: 33
-  coinsChance: 34
+  jumpPotion: {fileID: 11400000, guid: bf9246188c0b2cd489f66ceb2bcfdffc, type: 2}
+  healthPotionImage: {fileID: 21300000, guid: 54cf964db2bec8a4b919d3447e7b2279, type: 3}
+  speedPotionImage: {fileID: 21300000, guid: 479754c07bd8b114faebb4e47f39c432, type: 3}
+  jumpPotionImage: {fileID: 21300000, guid: 4d4ea0c7b4050dd41be8b7faac6bf7bf, type: 3}
+  coinsImage: {fileID: 1656275980, guid: c15ca7f4c553d72499a816ba6b63bcf2, type: 3}
+  healthPotionChance: 25
+  speedPotionChance: 25
+  coinsChance: 25
+  jumpPotionJump: 25
+  rewardTextUI: {fileID: 0}
+  rewardImageUI: {fileID: 0}
 --- !u!61 &6086450511349553149
 BoxCollider2D:
   m_ObjectHideFlags: 0

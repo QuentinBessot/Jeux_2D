@@ -11,20 +11,24 @@ public class Chest : MonoBehaviour
     public Animator animator;
     public int coinsToAdd;
     public AudioClip SoundToPlay;
+    public KeyBindingManager keyBindingManager;
 
     // Références pour les ScriptableObjects des potions
     public Item healthPotion;
     public Item speedPotion;
+    public Item jumpPotion;
 
     // Images pour les récompenses
     public Sprite healthPotionImage;
     public Sprite speedPotionImage;
+    public Sprite jumpPotionImage;
     public Sprite coinsImage;
 
     // Probabilités pour obtenir les différents items (tu peux les ajuster)
-    [Range(0, 100)] public int healthPotionChance = 33;
-    [Range(0, 100)] public int speedPotionChance = 33;
-    [Range(0, 100)] public int coinsChance = 34;
+    [Range(0, 100)] public int healthPotionChance = 25;
+    [Range(0, 100)] public int speedPotionChance = 25;
+    [Range(0, 100)] public int coinsChance = 25;
+    [Range(0, 100)] public int jumpPotionJump = 25;
 
     // Référence à l'élément Text UI pour afficher la récompense
     public Text rewardTextUI;  // Assurez-vous d'attacher un Text UI dans l'inspecteur
@@ -49,7 +53,7 @@ public class Chest : MonoBehaviour
 
     void Update()
     {
-        if (isInRange && Input.GetKeyDown(KeyCode.E))
+        if (isInRange && Input.GetKeyDown(keyBindingManager.movePlayers.interact))
         {
             OpenChest();
         }
@@ -84,11 +88,18 @@ public class Chest : MonoBehaviour
             rewardImage = speedPotionImage;
             Inventory.instance.UpdateInventoryUI();
         }
-        else
+        else if (randomValue < healthPotionChance + speedPotionChance + coinsChance)
         {
             Inventory.instance.AddCoins(coinsToAdd);
             rewardMessage = "You got some coins!";
             rewardImage = coinsImage;
+        }
+        else
+        {
+            Inventory.instance.content.Add(jumpPotion);
+            rewardMessage = "You got a Jump Potion!";
+            rewardImage = jumpPotionImage;
+            Inventory.instance.UpdateInventoryUI();
         }
 
         // Afficher le message de récompense et l'image dans l'UI

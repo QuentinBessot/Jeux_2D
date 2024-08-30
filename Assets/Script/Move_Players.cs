@@ -27,6 +27,14 @@ public class Move_Players : MonoBehaviour
 
     public static Move_Players instance;
 
+    // Nouvelles variables pour les touches de déplacement
+    public KeyCode leftKey ;
+    public KeyCode rightKey ;
+    public KeyCode climbUpKey ;
+    public KeyCode climbDownKey;
+    public KeyCode jumpKey ;
+    public KeyCode interact;
+
     private void Awake()
     {
         if (instance != null)
@@ -39,10 +47,32 @@ public class Move_Players : MonoBehaviour
 
     private void Update()
     {
-        horizontalMovement = Input.GetAxis("Horizontal") * moveSpeed * Time.fixedDeltaTime;
-        verticalMovement = Input.GetAxis("Vertical") * climbSpeed * Time.fixedDeltaTime;
+        // Reset les mouvements horizontaux et verticaux
+        horizontalMovement = 0f;
+        verticalMovement = 0f;
 
-        if (Input.GetButtonDown("Jump") && isGrounded && canJump)
+        // Vérifie les touches de déplacement horizontales
+        if (Input.GetKey(leftKey))
+        {
+            horizontalMovement = -moveSpeed * Time.fixedDeltaTime;
+        }
+        if (Input.GetKey(rightKey))
+        {
+            horizontalMovement = moveSpeed * Time.fixedDeltaTime;
+        }
+
+        // Vérifie les touches de déplacement verticales
+        if (Input.GetKey(climbUpKey))
+        {
+            verticalMovement = climbSpeed * Time.fixedDeltaTime;
+        }
+        if (Input.GetKey(climbDownKey))
+        {
+            verticalMovement = -climbSpeed * Time.fixedDeltaTime;
+        }
+
+        // Vérifie la touche de saut
+        if (Input.GetKeyDown(jumpKey) && isGrounded && canJump)
         {
             isJumping = true;
         }
@@ -117,11 +147,11 @@ public class Move_Players : MonoBehaviour
         }
         if (collision.CompareTag("Dialogue"))
         {
-            canJump = true;  // Désactiver le saut lorsque le joueur est à proximité d'une échelle
+            canJump = true;  // Réactiver le saut lorsque le joueur quitte la proximité de l'échelle
         }
         if (collision.CompareTag("Shop"))
         {
-            canJump = true;  // Désactiver le saut lorsque le joueur est à proximité d'une échelle
+            canJump = true;  // Réactiver le saut lorsque le joueur quitte la proximité de l'échelle
         }
     }
 

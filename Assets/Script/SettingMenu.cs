@@ -16,6 +16,8 @@ public class SettingMenu : MonoBehaviour
     public Slider musicSlider;
     public Slider soundSlider;
 
+    public GameObject changeButton;
+
     public void Start()
     {
         audioMixer.GetFloat("Music", out float musicValueForSlider);
@@ -77,5 +79,15 @@ public class SettingMenu : MonoBehaviour
     public void ClearSavedData()
     {
         PlayerPrefs.DeleteAll();
+    }
+
+    public void Button()
+    {
+        changeButton.SetActive(true);
+    }
+
+    public void Close()
+    {
+        changeButton.SetActive(false);
     }
 }

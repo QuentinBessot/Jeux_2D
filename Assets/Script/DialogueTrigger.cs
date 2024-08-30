@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
+    public KeyBindingManager keyBindingManager;
     public bool isInRange = false;
 
     private GameObject[] inventoryElements;
@@ -20,7 +21,7 @@ public class DialogueTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isInRange && Input.GetKeyDown(KeyCode.E))
+        if (isInRange && Input.GetKeyDown(keyBindingManager.movePlayers.interact))
         {
             TriggerDialogue();
         }
@@ -43,7 +44,6 @@ public class DialogueTrigger : MonoBehaviour
             interactUI.enabled = false;
             DialogueManager.instance.EndDialogue();
             DisableInventoryElements(true);
-
         }
     }
 
