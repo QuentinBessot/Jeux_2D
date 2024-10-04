@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,18 +16,19 @@ public class Ladder : MonoBehaviour
 
     void Update()
     {
-        if (isInRange && playerMovement.isClimbing && Input.GetKeyDown(Move_Players.instance.interact))
+        if (isInRange && Input.GetKeyDown(Move_Players.instance.interact))
         {
-            playerMovement.isClimbing = false;
-            collider.isTrigger = false;
-            return;
+            if (playerMovement.isClimbing)
+            {
+                playerMovement.isClimbing = false;
+                collider.isTrigger = false;
+            }
+            else
+            {
+                playerMovement.isClimbing = true;
+                collider.isTrigger = true;
+            }
         }
-
-        if(isInRange && Input.GetKeyDown(Move_Players.instance.interact))
-        { 
-            playerMovement.isClimbing = true;
-            collider.isTrigger = true;
-        }    
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -8,18 +8,17 @@ using System.Linq;
 public class SettingMenu : MonoBehaviour
 {
     public AudioMixer audioMixer;
-
     public Dropdown resolutionDropdown;
+    public Slider musicSlider;
+    public Slider soundSlider;
+    public GameObject changeButton;
 
     Resolution[] resolutions;
 
-    public Slider musicSlider;
-    public Slider soundSlider;
-
-    public GameObject changeButton;
-
     public void Start()
     {
+
+
         audioMixer.GetFloat("Music", out float musicValueForSlider);
         musicSlider.value = musicValueForSlider;
 

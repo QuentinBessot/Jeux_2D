@@ -17,11 +17,14 @@ public class MainMenu : MonoBehaviour
     public void Setting()
     {
         settingsWindow.SetActive(true);
+        AudioManager.instance.PlayBouncingAroundInPixelTown();
     }
 
     public void Close() 
     {
         settingsWindow.SetActive(false);
+        // Reprendre la playlist normale
+        AudioManager.instance.playNexSong();
     }
 
     public void LoadCreditScene()

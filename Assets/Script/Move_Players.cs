@@ -28,11 +28,11 @@ public class Move_Players : MonoBehaviour
     public static Move_Players instance;
 
     // Nouvelles variables pour les touches de déplacement
-    public KeyCode leftKey ;
-    public KeyCode rightKey ;
-    public KeyCode climbUpKey ;
+    public KeyCode leftKey;
+    public KeyCode rightKey;
+    public KeyCode climbUpKey;
     public KeyCode climbDownKey;
-    public KeyCode jumpKey ;
+    public KeyCode jumpKey;
     public KeyCode interact;
 
     private void Awake()
@@ -47,28 +47,34 @@ public class Move_Players : MonoBehaviour
 
     private void Update()
     {
-        // Reset les mouvements horizontaux et verticaux
+        // Réinitialiser les mouvements horizontaux et verticaux
         horizontalMovement = 0f;
         verticalMovement = 0f;
 
-        // Vérifie les touches de déplacement horizontales
-        if (Input.GetKey(leftKey))
+        // Vérifie les touches de déplacement horizontales seulement si le joueur n'est pas en train de grimper
+        if (!isClimbing)
         {
-            horizontalMovement = -moveSpeed * Time.fixedDeltaTime;
-        }
-        if (Input.GetKey(rightKey))
-        {
-            horizontalMovement = moveSpeed * Time.fixedDeltaTime;
+            if (Input.GetKey(leftKey))
+            {
+                horizontalMovement = -moveSpeed * Time.fixedDeltaTime;
+            }
+            if (Input.GetKey(rightKey))
+            {
+                horizontalMovement = moveSpeed * Time.fixedDeltaTime;
+            }
         }
 
-        // Vérifie les touches de déplacement verticales
-        if (Input.GetKey(climbUpKey))
+        // Vérifie les touches de déplacement verticales seulement si le joueur est en train de grimper
+        if (isClimbing)
         {
-            verticalMovement = climbSpeed * Time.fixedDeltaTime;
-        }
-        if (Input.GetKey(climbDownKey))
-        {
-            verticalMovement = -climbSpeed * Time.fixedDeltaTime;
+            if (Input.GetKey(climbUpKey))
+            {
+                verticalMovement = climbSpeed * Time.fixedDeltaTime;
+            }
+            if (Input.GetKey(climbDownKey))
+            {
+                verticalMovement = -climbSpeed * Time.fixedDeltaTime;
+            }
         }
 
         // Vérifie la touche de saut
@@ -94,6 +100,7 @@ public class Move_Players : MonoBehaviour
     {
         if (!isClimbing)
         {
+            // Mouvement horizontal et saut lorsque le joueur n'est pas en train de grimper
             Vector3 targetVelocity = new Vector2(_horizontalMovement, rb.velocity.y);
             rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, .05f);
 
@@ -106,8 +113,7 @@ public class Move_Players : MonoBehaviour
         else
         {
             // Mouvement vertical uniquement si le joueur grimpe
-            Vector3 targetVelocity = new Vector2(rb.velocity.x, _verticalMovement);
-            rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, .05f);
+            rb.velocity = new Vector2(0, _verticalMovement);
         }
     }
 
@@ -131,11 +137,11 @@ public class Move_Players : MonoBehaviour
         }
         if (collision.CompareTag("Dialogue"))
         {
-            canJump = false;  // Désactiver le saut lorsque le joueur est à proximité d'une échelle
+            canJump = false;  // Désactiver le saut lorsque le joueur est à proximité
         }
         if (collision.CompareTag("Shop"))
         {
-            canJump = false;  // Désactiver le saut lorsque le joueur est à proximité d'une échelle
+            canJump = false;  // Désactiver le saut lorsque le joueur est à proximité
         }
     }
 
@@ -147,11 +153,11 @@ public class Move_Players : MonoBehaviour
         }
         if (collision.CompareTag("Dialogue"))
         {
-            canJump = true;  // Réactiver le saut lorsque le joueur quitte la proximité de l'échelle
+            canJump = true;  // Réactiver le saut lorsque le joueur quitte la proximité
         }
         if (collision.CompareTag("Shop"))
         {
-            canJump = true;  // Réactiver le saut lorsque le joueur quitte la proximité de l'échelle
+            canJump = true;  // Réactiver le saut lorsque le joueur quitte la proximité
         }
     }
 
